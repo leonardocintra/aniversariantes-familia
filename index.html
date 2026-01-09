@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aniversariantes da Família</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .mes {
+      margin-bottom: 30px;
+      padding: 15px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .mes.atual {
+      border: 3px solid #ff9800;
+      background: #fff7e6;
+    }
+
+    .mes h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 6px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .hoje {
+      font-weight: bold;
+      color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎂 Aniversariantes da Família</h1>
+
+<div id="lista"></div>
+
+<script>
+const aniversariantes = [
+  // Simone
+  { nome: "Flávio", dia: 30, mes: 7, ano: 1960 },
+  { nome: "Simone", dia: 15, mes: 12, ano: 1964 },
+  { nome: "Marcelo", dia: 10, mes: 4, ano: 1991 },
+  { nome: "Ariane", dia: 6, mes: 3, ano: 1994 },
+  { nome: "Julia", dia: 7, mes: 11, ano: 2015 },
+  { nome: "José Flávio", dia: 18, mes: 11, ano: 2019 },
+  { nome: "Thaisa", dia: 27, mes: 5, ano: 2025 },
+  { nome: "Ricardo", dia: 21, mes: 3, ano: 1994 },
+  { nome: "Camila", dia: 3, mes: 2, ano: 1993 },
+  { nome: "João", dia: 31, mes: 10, ano: 2025 },
+
+  // Siomara
+  { nome: "Isac", dia: 12, mes: 8, ano: 1964 },
+  { nome: "Siomara", dia: 24, mes: 2, ano: 1967 },
+  { nome: "Leonardo", dia: 29, mes: 1, ano: 1990 },
+  { nome: "Juliana Cintra", dia: 18, mes: 5, ano: 1994 },
+  { nome: "Luisa", dia: 28, mes: 2, ano: 2019 },
+  { nome: "Henrique", dia: 31, mes: 8, ano: 2020 },
+  { nome: "Mariana", dia: 13, mes: 1, ano: 2021 },
+  { nome: "Laura", dia: 11, mes: 12, ano: 2024 },
+  { nome: "Guilherme", dia: 8, mes: 8, ano: 1992 },
+  { nome: "Juliana Carrijo", dia: 3, mes: 9, ano: 1991 },
+  { nome: "Raul", dia: 21, mes: 10, ano: 2016 },
+  { nome: "Cecilia", dia: 27, mes: 10, ano: 2017 },
+  { nome: "Davi", dia: 5, mes: 4, ano: 2019 },
+  { nome: "Tomas", dia: 6, mes: 8, ano: 2021 },
+  { nome: "Teresa", dia: 16, mes: 9, ano: 2022 },
+  { nome: "Helena", dia: 26, mes: 10, ano: 2024 },
+  { nome: "João Marcos", dia: 17, mes: 5, ano: 1993 },
+  { nome: "Adriely", dia: 18, mes: 8, ano: 1993 },
+  { nome: "Mateus", dia: 14, mes: 5, ano: 2018 },
+  { nome: "Tiago", dia: 22, mes: 7, ano: 2022 },
+  { nome: "Isabel", dia: 20, mes: 4, ano: 2024 },
+  { nome: "Sara", dia: 17, mes: 5, ano: 1993 },
+  { nome: "Hernane", dia: 14, mes: 9, ano: 1984 },
+  { nome: "José", dia: 8, mes: 11, ano: 2019 },
+  { nome: "Alvaro", dia: 12, mes: 3, ano: 2022 },
+  { nome: "Lucia", dia: 26, mes: 5 },
+  { nome: "Pedro José", dia: 19, mes: 3, ano: 1995 },
+  { nome: "Stella", dia: 25, mes: 3, ano: 2001 },
+  { nome: "Ramon", dia: 4, mes: 2, ano: 2024 },
+  { nome: "Daniel", dia: 30, mes: 8, ano: 1996 },
+  { nome: "Vivi", dia: 30, mes: 4, ano: 1997 },
+  { nome: "André", dia: 18, mes: 9, ano: 2022 },
+  { nome: "Catarina", dia: 6, mes: 3, ano: 2024 },
+  { nome: "Olavo", dia: 6, mes: 10, ano: 2025 },
+  { nome: "Debora", dia: 20, mes: 6 },
+  { nome: "Bruno", dia: 2, mes: 6 },
+  { nome: "Tobias", dia: 15, mes: 5, ano: 2006 }
+];
+
+const meses = [
+  "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+  "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+];
+
+const hoje = new Date();
+const mesAtual = hoje.getMonth() + 1;
+const diaAtual = hoje.getDate();
+
+const container = document.getElementById("lista");
+
+for (let m = 1; m <= 12; m++) {
+  const doMes = aniversariantes
+    .filter(a => a.mes === m)
+    .sort((a,b) => a.dia - b.dia);
+
+  if (doMes.length === 0) continue;
+
+  const div = document.createElement("div");
+  div.className = "mes" + (m === mesAtual ? " atual" : "");
+
+  const h2 = document.createElement("h2");
+  h2.textContent = meses[m-1];
+  div.appendChild(h2);
+
+  const ul = document.createElement("ul");
+
+  doMes.forEach(a => {
+    const li = document.createElement("li");
+    if (m === mesAtual && a.dia === diaAtual) {
+      li.classList.add("hoje");
+    }
+    li.textContent = `${a.dia.toString().padStart(2,"0")} – ${a.nome}`;
+    ul.appendChild(li);
+  });
+
+  div.appendChild(ul);
+  container.appendChild(div);
+}
+</script>
+
+</body>
+</html>
